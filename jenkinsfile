@@ -4,10 +4,10 @@ pipeline {
     
     environment {
 
-      sonar_url = 'http://172.31.84.209:9000'
+      sonar_url = 'http://172.31.11.55:9000'
       sonar_username = 'admin'
       sonar_password = 'admin'
-      nexus_url = '172.31.84.209:8081'
+      nexus_url = '172.31.11.55:8081'
       artifact_version = '4.0.0'
 
  }
@@ -21,7 +21,7 @@ pipeline {
       stage('Git Clone') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/chinni4321/game-of-life.git'
+                git 'https://github.com/sowmya2506/game_copy.git'
 
             }
         }
@@ -42,7 +42,7 @@ pipeline {
       } 
        stage ('Publish Artifact') {
         steps {
-          nexusArtifactUploader artifacts: [[artifactId: 'gameoflife', classifier: '', file: "/var/lib/jenkins/workspace/pipeline/gameoflife-build/target/gameoflife-build-1.0-SNAPSHOT.jar", type: 'jar']], credentialsId: 'b70b50a7-8272-4c38-a0c9-a621fb7e128e', groupId: 'com.wakaleo.gameoflife', nexusUrl: "${nexus_url}", nexusVersion: 'nexus3', protocol: 'http', repository: 'release', version: "${artifact_version}"
+          nexusArtifactUploader artifacts: [[artifactId: 'gameoflife', classifier: '', file: "/var/lib/jenkins/workspace/game_copy/gameoflife-build/target/gameoflife-build-1.0-SNAPSHOT.jar", type: 'jar']], credentialsId: 'd2c05ed1-8a6e-4438-933a-6a6d05721b2c', groupId: 'com.wakaleo.gameoflife', nexusUrl: "${nexus_url}", nexusVersion: 'nexus3', protocol: 'http', repository: 'release1', version: "${artifact_version}"
          archiveArtifacts '**/*.jar'
         }
       }
@@ -58,7 +58,7 @@ pipeline {
     steps {
     script {
         withDockerRegistry(registry:[ credentialsId: 'registryCredential']) {
-         sh 'docker push chinniprashanthsahul/myimage:gameoflife'
+         sh 'docker push 3c8cd01e4b17/pipegame-new:v1'
          }
         }
       }
