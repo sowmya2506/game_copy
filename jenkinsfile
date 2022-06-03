@@ -14,13 +14,14 @@ pipeline {
 
        tools {
         jdk 'Java8'
-        maven 'Maven3.3.9'
+        maven 'Maven3.6.3'
     }
 
     stages { 
       stage('Git Clone') {
             steps {
                 // Get some code from a GitHub repository
+                git branch: 'main',
                 git 'https://github.com/sowmya2506/game_copy.git'
 
             }
@@ -49,7 +50,7 @@ pipeline {
       stage('Building image') {
        steps{
          script {
-           dockerImage = docker.build "chinniprashanthsahul/myimage:gameoflife"
+           dockerImage = docker.build "3c8cd01e4b17/pipegame-new:v1"
            }
           }
          }
